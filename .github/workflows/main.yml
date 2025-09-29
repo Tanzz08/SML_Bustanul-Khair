@@ -31,7 +31,7 @@ jobs:
       # Jalankan preprocessing otomatis
       - name: Run preprocessing
         run: |
-          python preprocessing/automate_bustanul-khair.py
+          python preprocessing/automate_Bustanul-Khair.py
 
       # Upload hasil preprocessing sebagai artifact
       - name: Upload processed dataset
