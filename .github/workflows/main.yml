@@ -42,8 +42,8 @@ jobs:
       # Commit hasil ZIP ke repo (pakai Git LFS)
       - name: Commit processed dataset zip
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name ${{ secrets.username }}
+          git config --global user.email ${{ secrets.email }}
           git pull origin main
           git add processed-dataset.zip
           git commit -m "Update processed dataset zip" || echo "No changes to commit"
