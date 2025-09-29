@@ -46,7 +46,10 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      
           git pull origin main
           git add processed-dataset.zip
           git commit -m "Update processed dataset zip" || echo "No changes to commit"
+      
           git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git HEAD:main
+
