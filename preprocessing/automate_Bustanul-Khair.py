@@ -36,8 +36,8 @@ def automate_preprocessing(file_path, target_column="isFraud", apply_smote=False
 
 
 if __name__ == "__main__":
-    # contoh pemanggilan langsung
-    file_path = "../Paysim.csv"
+    base_dir = os.path.dirname(__file__)
+    file_path = os.path.join(base_dir, "..", "Paysim.csv")
 
     # Jalankan preprocessing + SMOTE
     X_train, X_test, y_train, y_test = automate_preprocessing(file_path, apply_smote=True)
