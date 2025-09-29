@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout repo + Git LFS
+      # Checkout repo + LFS
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
@@ -33,23 +33,9 @@ jobs:
         run: |
           python preprocessing/automate_Bustanul-Khair.py
 
-      # Buat file ZIP hasil preprocessing
-      - name: Create processed dataset zip
-        run: |
-          cd preprocessing
-          zip -r ../processed-dataset.zip X_train.csv X_test.csv y_train.csv y_test.csv
-
-      # Commit hasil ZIP ke repo (pakai Git LFS)
-      - name: Commit processed dataset zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-      
-          git pull origin main
-          git add processed-dataset.zip
-          git commit -m "Update processed dataset zip" || echo "No changes to commit"
-      
-          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git HEAD:main
-
+      # Upload hasil preprocessing sebagai artifact
+      - name: Upload processed dataset
+        uses: actions/upload-artifact@v4
+        with:
+          name: processed-dataset
+          path: preprocessing/
