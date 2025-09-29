@@ -41,9 +41,12 @@ jobs:
 
       # Commit hasil ZIP ke repo (pakai Git LFS)
       - name: Commit processed dataset zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config --global user.name ${{ secrets.username }}
-          git config --global user.email ${{ secrets.email }}
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git pull origin main
           git add processed-dataset.zip
-          git commit -m "Update processed dataset zip" || true
-          git push origin main
+          git commit -m "Update processed dataset zip" || echo "No changes to commit"
+          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git HEAD:main
