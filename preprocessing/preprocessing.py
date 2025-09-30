@@ -4,10 +4,10 @@ from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
-from imblearn.over_sampling import SMOTE
+from imblearn.under_sampling import RandomUnderSampler
 from joblib import dump
 
-def preprocess_paysim(data, target_column, save_path, apply_smote=False):
+def preprocess_paysim(data, target_column, save_path, apply_undersample=False):
     # 1. Drop kolom yang tidak relevan
     if "isFlaggedFraud" in data.columns:
         data = data.drop(["isFlaggedFraud"], axis=1)
@@ -78,11 +78,11 @@ def preprocess_paysim(data, target_column, save_path, apply_smote=False):
     y_train = pd.Series(y_train, name=target_column)
     y_test = pd.Series(y_test, name=target_column)
 
-    # 14. Terapkan SMOTE (opsional)
-    if apply_smote:
-        smote = SMOTE(random_state=42)
-        X_train, y_train = smote.fit_resample(X_train, y_train)
-        print("✅ SMOTE diterapkan: Data training menjadi seimbang.")
+    # 14. Terapkan Undersampling (opsional)
+    if apply_undersample:
+        rus = RandomUnderSampler(random_state=42)
+        X_train, y_train = rus.fit_resample(X_train, y_train)
+        print("✅ Random Undersampling diterapkan: Data training diperkecil & balance.")
 
     # 15. Simpan pipeline
     dump(preprocessor, save_path)

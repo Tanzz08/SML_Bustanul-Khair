@@ -2,13 +2,13 @@ import pandas as pd
 import os
 from preprocessing import preprocess_paysim
 
-def automate_preprocessing(file_path, target_column="isFraud", apply_smote=False):
+def automate_preprocessing(file_path, target_column="isFraud", apply_undersample=False):
     """
     Fungsi untuk otomatis preprocessing dataset PaySim
     Args:
         file_path (str): path dataset CSV
         target_column (str): nama kolom target (default = isFraud)
-        apply_smote (bool): apakah ingin menerapkan SMOTE di training data
+        apply_undersample (bool): apakah ingin menerapkan undersample di training data
     Returns:
         X_train, X_test, y_train, y_test : dataset siap latih
     """
@@ -21,7 +21,7 @@ def automate_preprocessing(file_path, target_column="isFraud", apply_smote=False
         df,
         target_column=target_column,
         save_path="preprocessor_pipeline.joblib",
-        apply_smote=apply_smote
+        apply_undersample=apply_undersample
     )
 
     print("✅ Preprocessing selesai. Dataset siap dilatih 🚀")
@@ -39,5 +39,5 @@ if __name__ == "__main__":
     base_dir = os.path.dirname(__file__)
     file_path = os.path.join(base_dir, "..", "Paysim.csv")
 
-    # Jalankan preprocessing + SMOTE
-    X_train, X_test, y_train, y_test = automate_preprocessing(file_path, apply_smote=True)
+    # Jalankan preprocessing + undersample
+    X_train, X_test, y_train, y_test = automate_preprocessing(file_path, apply_undersample=True)
